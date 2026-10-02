@@ -1,0 +1,553 @@
+/* =========================================
+   1. GLOBAL STYLES
+   ========================================= */
+body {
+    background: #0f0907;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    user-select: none;
+}
+
+#game-viewport {
+    width: 850px;
+    height: 600px;
+    background: #1c0f0d;
+    border: 12px solid #a93226;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(231, 76, 60, 0.4), inset 0 0 30px rgba(0, 0, 0, 0.8);
+    cursor: crosshair;
+}
+
+.screen-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #1c0f0d;
+    z-index: 10;
+}
+
+#screen-gameplay {
+    justify-content: flex-start !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Floating Spark Decorations */
+.lava-decoration {
+    position: absolute;
+    animation: drift 8s infinite linear;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes drift {
+    0% {
+        transform: translateY(0px) scale(1);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translateY(-50px) scale(1.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* =========================================
+   2. TYPOGRAPHY & BUTTONS
+   ========================================= */
+h1 {
+    font-size: 55px;
+    color: #e67e22;
+    text-shadow: 4px 4px 0px #873600, 0 0 20px #e67e22;
+    margin-bottom: 5px;
+    text-align: center;
+    animation: floatTitle 3s infinite ease-in-out;
+}
+
+@keyframes floatTitle {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+h2 {
+    font-size: 24px;
+    color: #f1c40f;
+    text-shadow: 2px 2px #000;
+    margin-bottom: 20px;
+}
+
+.menu-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    z-index: 10;
+}
+
+.row-btns {
+    display: flex;
+    gap: 15px;
+}
+
+button {
+    font-family: inherit;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 25px;
+    transition: transform 0.1s ease;
+    outline: none;
+}
+
+.big-btn {
+    background: #e74c3c;
+    font-size: 24px;
+    padding: 15px 40px;
+    box-shadow: 0 8px 0 #922b21;
+    animation: pulseButton 2s infinite ease-in-out;
+}
+
+@keyframes pulseButton {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.secondary-btn,
+#btn-pause {
+    background: #d35400;
+    font-size: 18px;
+    padding: 10px 25px;
+    box-shadow: 0 6px 0 #873600;
+}
+
+button:active {
+    transform: translateY(6px) !important;
+    box-shadow: none !important;
+}
+
+/* =========================================
+   3. GAME UI (Fixed ONE Line HUD)
+   ========================================= */
+#hud-bar {
+    width: 100%;
+    height: 70px;
+    background: rgba(139, 40, 19, 0.95);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    border-bottom: 5px solid #641e16;
+    font-weight: bold;
+    font-size: 15px;
+    z-index: 20;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+}
+
+.hud-item {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+#sequence-display-container {
+    background: #FFF8DC;
+    color: #333;
+    padding: 6px 15px;
+    border-radius: 20px;
+    border: 4px solid #e74c3c;
+    font-size: 18px;
+    font-weight: 900;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+}
+
+/* =========================================
+   4. VOLCANIC ARENA
+   ========================================= */
+#active-arena {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 70px);
+    display: flex;
+    flex-direction: column;
+}
+
+#bridge-gap-zone {
+    width: 100%;
+    height: 180px;
+    background: #23120f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 8px solid #4a231a;
+    position: relative;
+}
+
+.bridge-dock {
+    width: 280px;
+    height: 70px;
+    background: #566573;
+    border: 4px solid #2c3e50;
+    box-shadow: inset 0 0 15px #000;
+}
+
+#bridge-left {
+    border-radius: 0 15px 15px 0;
+}
+
+#bridge-right {
+    border-radius: 15px 0 0 15px;
+}
+
+#bridge-gap-target {
+    width: 90px;
+    height: 80px;
+    border: 4px dashed #e67e22;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #e67e22;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+#runner {
+    position: absolute;
+    bottom: 40px;
+    left: -50px;
+    font-size: 55px;
+    z-index: 100;
+    text-shadow: 0 4px 5px rgba(0, 0, 0, 0.8);
+}
+
+.animate-run {
+    animation: victoryRun 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes victoryRun {
+    0% {
+        left: -50px;
+        transform: scaleX(1);
+    }
+
+    40% {
+        transform: scaleX(1) translateY(-20px);
+    }
+
+    100% {
+        left: 900px;
+        transform: scaleX(1);
+    }
+}
+
+#magma-river {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #ff3300 0%, #ff6600 50%, #cc2400 100%);
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.stone-step {
+    position: absolute;
+    width: 85px;
+    height: 65px;
+    background: #34495e;
+    border: 4px solid #1a252f;
+    border-radius: 18px;
+    box-shadow: 0 6px #2c3e50, inset 0 0 10px #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+    cursor: crosshair;
+    z-index: 10;
+}
+
+.heart-item {
+    animation: heartThump 1s infinite alternate;
+}
+
+@keyframes heartThump {
+    0% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+/* =========================================
+   5. OVERLAYS, MODALS & COUNTDOWN
+   ========================================= */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-box {
+    background: #FFFACD;
+    padding: 25px 35px;
+    border-radius: 20px;
+    border: 8px solid #e67e22;
+    max-width: 550px;
+    max-height: 90%;
+    overflow-y: auto;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+.modal-box h2 {
+    color: #d35400;
+    font-size: 32px;
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+ul {
+    text-align: left;
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: bold;
+    padding-left: 20px;
+}
+
+.animated-pop {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#countdown-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 150px;
+    font-weight: 900;
+    color: #e67e22;
+    text-shadow: -5px -5px 0 #fff, 5px -5px 0 #fff, -5px 5px 0 #fff, 5px 5px 0 #fff, 0 15px 20px rgba(0, 0, 0, 0.8);
+    z-index: 999;
+    pointer-events: none;
+    animation: pulseCount 0.5s infinite alternate;
+}
+
+@keyframes pulseCount {
+    0% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1.1);
+    }
+}
+
+/* =========================================
+   6. ANIMATED TUTORIAL BOX
+   ========================================= */
+.tutorial-stage {
+    position: relative;
+    background: #1c0f0d;
+    border: 4px solid #a93226;
+    border-radius: 15px;
+    height: 140px;
+    margin: 15px 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    box-shadow: inset 0 0 15px #000;
+}
+
+.tut-pattern {
+    background: #FFF8DC;
+    color: #333;
+    padding: 5px 15px;
+    border-radius: 10px;
+    border: 3px solid #e74c3c;
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 15px;
+    height: max-content;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tut-gap {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 2px dashed #e67e22;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 30px;
+    color: #e67e22;
+}
+
+.tut-rock-anim {
+    position: absolute;
+    width: 45px;
+    height: 35px;
+    background: #34495e;
+    border: 3px solid #1a252f;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: tutRockMove 3s infinite;
+}
+
+.tut-cursor {
+    position: absolute;
+    font-size: 30px;
+    z-index: 10;
+    animation: tutCursorClick 3s infinite;
+}
+
+.tut-heart-anim {
+    position: absolute;
+    font-size: 25px;
+    top: 80px;
+    animation: tutHeartFloat 3s infinite linear;
+}
+
+@keyframes tutRockMove {
+
+    0%,
+    35% {
+        left: 15%;
+        top: 80px;
+        transform: scale(1);
+        border-color: #1a252f;
+    }
+
+    40%,
+    90% {
+        left: 63%;
+        top: 12px;
+        transform: scale(0.8);
+        border-color: #55efc4;
+        box-shadow: 0 0 15px #55efc4;
+    }
+
+    100% {
+        left: 63%;
+        top: 12px;
+        opacity: 0;
+    }
+}
+
+@keyframes tutCursorClick {
+    0% {
+        left: 40%;
+        top: 120px;
+        opacity: 0;
+    }
+
+    15% {
+        left: 22%;
+        top: 95px;
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(0.7);
+    }
+
+    /* Hand Clicks Down */
+    35% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    /* Hand Clicks Up */
+    45%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes tutHeartFloat {
+    0% {
+        left: 100%;
+    }
+
+    100% {
+        left: -20%;
+    }
+}
