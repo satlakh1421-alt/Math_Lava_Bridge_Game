@@ -1,39 +1,23 @@
-# Math_Lava_Bridge_Game
-Math Game that is created for kids to play and learn about Math
-
-## 🤝 Contributing
-
-Contributions, bug reports, and feature requests are always welcome! Feel free to open an issue or submit a pull request.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push toHere is a clean, professional, and well-structured `README.md` template crafted for your **Math_Lava_Bridge_Game** repository. You can customize any specific details (such as controls, tech stack, or file layout) to match your exact project setup before adding it to your repository!
-
-# 🌋🌉 Math Lava Bridge Game
-
-An exciting, suspenseful educational game where your math skills are literally the stepping stones to safety! Solve math problems correctly to build your bridge across hot molten lava and reach the other side.
+# 🍕 Math Pizza Game
+A fun, engaging, and delicious educational game that combines pizza-making and slicing with practicing math, fractions, and arithmetic problem-solving!
 
 ## 🚀 Features
-
-- **High-Stakes Gameplay:** Build bridge planks or select the right stepping stones by answering math questions quickly to avoid falling into the lava!
-- **Progressive Difficulty:** Challenges scale up as you progress further across the bridge.
-- **Engaging Mechanics:** Combines puzzle-solving, reflexes, and arcade survival elements.
-- **Clean & Lightweight:** Designed for smooth performance.
+- **Interactive Pizza Theme:** Slice and top pizzas while solving math equations and fraction puzzles.
+- **Engaging Learning:** Makes mathematical concepts like division, fractions, and basic arithmetic intuitive and fun.
+- **Arcade-Style Challenges:** Test your speed and accuracy as orders come in faster!
+- **Clean & Lightweight:** Built for smooth performance.
 
 ## 🎮 How to Play
-
-1. Start a new game session.
-2. View the math question, equation, or prompt given on the screen.
-3. Select, step on, or build the platform/stone that displays the correct answer.
-4. Cross the bridge successfully without making mistakes to win the game and set a high score!
+1. Start a new game session and check the customer's order or math prompt.
+2. Solve the math problem or fraction requirement displayed on the screen.
+3. Slice the pizza or select the correct toppings/portions to match the solution.
+4. Serve the correct pizza to earn points and keep your customers happy!
 
 ## 🛠️ Getting Started & Installation
-
 To run or test this project locally, follow these steps:
 
 1. **Clone the repository:**
-   git clone https://github.com/satlakh1421-alt/Math_Lava_Bridge_Game.git
+   git clone [https://github.com/satlakh1421-alt/Math_Pizza_Game.git](https://github.com/satlakh1421-alt/Math_Pizza_Game.git)
 2. **Navigate to the project directory:**
    cd Math_Lava_Bridge_Game
 3.**Run the game:**
